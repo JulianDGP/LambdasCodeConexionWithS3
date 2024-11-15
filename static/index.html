@@ -1,0 +1,35 @@
+<html>
+<head>
+    <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+    <title>API Demo</title>
+</head>
+<body>
+  <h1>Data from API</h1>
+  <div id="button-container"></div>
+  <div id="items"></div>
+  <script>
+    // Función para cargar y ejecutar el script
+    function loadButton() {
+      fetch('https://ha34pe4tg3.execute-api.us-east-1.amazonaws.com/prod/traerboton')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('button-container').innerHTML = html;
+          
+          // Buscar y ejecutar el script manualmente
+          const script = document.querySelector('#button-container script');
+          if (script) {
+            // Evaluar el contenido del script
+            eval(script.textContent);
+
+            // Declarar fetchItems en el ámbito global
+            window.fetchItems = fetchItems;
+          }
+        })
+        .catch(error => console.error('Error fetching button:', error));
+    }
+
+    // Llamar a la función para cargar el botón
+    loadButton();
+  </script>
+</body>
+</html>
